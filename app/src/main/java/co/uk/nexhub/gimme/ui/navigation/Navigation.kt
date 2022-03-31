@@ -1,17 +1,8 @@
 package co.uk.nexhub.gimme.ui.navigation
 
 
-import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
-import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
-import co.uk.nexhub.gimme.ui.screens.*
-
-@Composable
-fun Navigation(navController: NavHostController) {
+/*@Composable
+fun Navigation(navigator: DestinationsNavigator) {
     NavHost(navController = navController, startDestination = "splash") {
         composable("splash") {
             SplashScreen(navController = navController)
@@ -36,4 +27,4 @@ fun Navigation(navController: NavHostController) {
             SettingsScreen("Settings")
         }
     }
-}
+}*/

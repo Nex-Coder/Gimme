@@ -13,12 +13,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
-import androidx.navigation.NavController
 import co.uk.nexhub.gimme.R
+import co.uk.nexhub.gimme.ui.screens.destinations.HomeScreenDestination
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.delay
 
+@Destination(start = true)
 @Composable
-fun SplashScreen(navController: NavController) {
+fun SplashScreen(navigator: DestinationsNavigator) {
     val scale = remember {
         Animatable(0f)
     }
@@ -32,7 +35,7 @@ fun SplashScreen(navController: NavController) {
         )
         delay(2000L)
 
-        navController.navigate("home")
+        navigator.navigate(HomeScreenDestination())
     }
 
     Box(
