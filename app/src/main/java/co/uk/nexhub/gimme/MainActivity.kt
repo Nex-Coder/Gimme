@@ -19,7 +19,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             GimmeTheme { // A surface container using the 'background' color from the theme
-                Surface(color = Color.DarkGray, // or MaterialTheme.colors.background
+                Surface(
+                    color = Color.DarkGray, // or MaterialTheme.colors.background
                     modifier = Modifier.fillMaxSize(),
                 ) {
                     val navController = rememberNavController()

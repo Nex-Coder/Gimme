@@ -3,10 +3,6 @@ package co.uk.nexhub.gimme.ui.elements
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -15,8 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
-//TODO Implement function in botnavbar that hides and shows the navigation control (slides down and disables etc)
-//@ExperimentalMaterialApi
+
 @Composable
 fun BottomNavigationBar(
     items: List<BottomNavItem>,
@@ -25,13 +20,7 @@ fun BottomNavigationBar(
     show: Boolean = true,
     onItemClick: (BottomNavItem) -> Unit
 ) {
-    var isShown by rememberSaveable {
-        mutableStateOf(show)
-    }
-
-    if (!isShown) {
-
-    } else {
+    if (show) {
         BottomNavigation(
             modifier = modifier,
             backgroundColor = Color.DarkGray,
@@ -67,45 +56,3 @@ fun BottomNavigationBar(
         }
     }
 }
-
-
-
-
-
-/* Example to implement this
-@ExperimentalMaterialApi
-@Composable
-private fun BottomNavigationBarScaffold(
-    navController: NavController) {
-
-    val navControl = rememberNavController()
-    Scaffold(
-        bottomBar = {
-            BottomNavigationBar(
-                items = listOf(
-                    BottomNavItem(
-                        name = "Home",
-                        route = "home",
-                        icon = Icons.Default.Home
-                    ),
-                    BottomNavItem(
-                        name = "Chat",
-                        route = "chat",
-                        icon = Icons.Default.Notifications,
-                        badgeCount = 2
-                    ),
-                    BottomNavItem(
-                        name = "Settings",
-                        route = "settings",
-                        icon = Icons.Default.Settings,
-                        badgeCount = 2096
-                    )
-                ),
-                navController = navController,
-                onItemClick =  {
-                    navControl.navigate(it.route)
-                }
-            )
-        }
-    ) {}
-} */
