@@ -18,7 +18,7 @@ import co.uk.nexhub.gimme.R
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(navControl : NavController) {
+fun SplashScreen(navController: NavController) {
     val scale = remember {
         Animatable(0f)
     }
@@ -31,7 +31,8 @@ fun SplashScreen(navControl : NavController) {
                 })
         )
         delay(2000L)
-        navControl.navigate("home_screen")
+
+        navController.navigate("home")
     }
 
     Box(
