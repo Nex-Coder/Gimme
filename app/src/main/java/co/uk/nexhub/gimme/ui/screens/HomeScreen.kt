@@ -5,6 +5,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -14,7 +15,7 @@ import co.uk.nexhub.gimme.ui.navigation.Screen
 
 @Composable
 fun HomeScreen(navController: NavController) {
-    var text by remember {
+    var text by rememberSaveable {
         mutableStateOf("Test")
     }
 

@@ -8,10 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import co.uk.nexhub.gimme.ui.screens.AboutScreen
-import co.uk.nexhub.gimme.ui.screens.HomeScreen
-import co.uk.nexhub.gimme.ui.screens.ParamTestScreen
-import co.uk.nexhub.gimme.ui.screens.SplashScreen
+import co.uk.nexhub.gimme.ui.screens.*
 
 @Composable
 fun Navigation(navController: NavHostController) {
@@ -36,7 +33,7 @@ fun Navigation(navController: NavHostController) {
             AboutScreen()
         }
         composable(route = Screen.SettingsScreen.route) {
-            AboutScreen()
+            SettingsScreen("Settings")
         }
     }
 }
