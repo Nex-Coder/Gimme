@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             GimmeTheme { // A surface container using the 'background' color from the theme
-                Surface(color = Color.DarkGray, // MaterialTheme.colors.background
+                Surface(color = Color.DarkGray, // or MaterialTheme.colors.background
                     modifier = Modifier.fillMaxSize(),
                 ) {
                     Navigation()
@@ -44,17 +44,13 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
 
-@Preview(showBackground = true)
+/*@Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     GimmeTheme {
-        Greeting("Android")
+
     }
-}
+}*/
 
 
