@@ -2,15 +2,19 @@ package co.uk.nexhub.gimme.ui.elements
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
+import co.uk.nexhub.gimme.ui.elements.functioning.isShown
 
+var currentDestination = MutableLiveData("")
 
 @Composable
 fun BottomNavigationBar(
@@ -21,13 +25,15 @@ fun BottomNavigationBar(
     onItemClick: (BottomNavItem) -> Unit
 ) {
     if (show) {
+        enableDestinationChangeListening(true, navController)
         BottomNavigation(
             modifier = modifier,
             backgroundColor = Color.DarkGray,
             elevation = 5.dp
         ) {
             items.forEach { item ->
-                val selected = item.route == navController.currentDestination
+                val obvCurrentDestination: String? by currentDestination.observeAsState()
+                val selected = item.route.route == obvCurrentDestination
                 BottomNavigationItem(
                     selected = selected,
                     onClick = { onItemClick(item) },
@@ -54,5 +60,20 @@ fun BottomNavigationBar(
                 )
             }
         }
+    } else {
+        enableDestinationChangeListening(false, navController)
     }
 }
+
+private fun enableDestinationChangeListening(isEnable: Boolean, navController: NavController) {
+    if (isEnable) {
+        navController.addOnDestinationChangedListener(mainDestinationChangedListener)
+    } else {
+        navController.removeOnDestinationChangedListener(mainDestinationChangedListener)
+    }
+}
+
+private val mainDestinationChangedListener =
+    NavController.OnDestinationChangedListener { _, destination, _ ->
+        currentDestination.postValue(destination.route)
+    }
