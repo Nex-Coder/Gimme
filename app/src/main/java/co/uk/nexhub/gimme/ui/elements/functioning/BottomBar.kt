@@ -7,20 +7,14 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import co.uk.nexhub.gimme.ui.elements.BottomNavItem
 import co.uk.nexhub.gimme.ui.elements.BottomNavigationBar
-import co.uk.nexhub.gimme.ui.navigation.tools.hideNavigation
-import co.uk.nexhub.gimme.ui.navigation.tools.toggleNavigation
 import co.uk.nexhub.gimme.ui.screens.destinations.AboutScreenDestination
 import co.uk.nexhub.gimme.ui.screens.destinations.HomeScreenDestination
 import co.uk.nexhub.gimme.ui.screens.destinations.SettingsScreenDestination
 import com.ramcosta.composedestinations.navigation.navigateTo
-
 
 
 val isShown = MutableLiveData(true)
@@ -68,3 +62,4 @@ fun BottomBar(navController: NavController) {
         )
     }
 }
+

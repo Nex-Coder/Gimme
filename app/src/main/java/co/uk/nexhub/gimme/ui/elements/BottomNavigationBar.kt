@@ -2,7 +2,8 @@ package co.uk.nexhub.gimme.ui.elements
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -12,7 +13,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
-import co.uk.nexhub.gimme.ui.elements.functioning.isShown
 
 var currentDestination = MutableLiveData("")
 
@@ -25,7 +25,7 @@ fun BottomNavigationBar(
     onItemClick: (BottomNavItem) -> Unit
 ) {
     if (show) {
-        enableDestinationChangeListening(true, navController)
+        enableDestinationChangeListening(false, navController)
         BottomNavigation(
             modifier = modifier,
             backgroundColor = Color.DarkGray,

@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import co.uk.nexhub.gimme.ui.elements.functioning.BottomBar
+import co.uk.nexhub.gimme.ui.navigation.tools.hideNavigation
 import co.uk.nexhub.gimme.ui.screens.NavGraphs
 import co.uk.nexhub.gimme.ui.theme.GimmeTheme
 import com.ramcosta.composedestinations.DestinationsNavHost
@@ -37,12 +38,11 @@ fun Default() {
             val navController = rememberNavController()
 
             Scaffold(
-                bottomBar = { BottomBar(navController) }
+                bottomBar = { BottomBar(navController); hideNavigation() },
             ) {
                 DestinationsNavHost(navGraph = NavGraphs.root, navController = navController)
             }
         }
     }
 }
-
 
