@@ -15,9 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -90,13 +88,9 @@ fun HomeScreen(navController: NavController) {
 
         VerticalDivider(20.dp)
 
-        var size by remember { mutableStateOf(IntSize.Zero) }
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .onSizeChanged {
-                    size = it
-                }
                 .height(280.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
