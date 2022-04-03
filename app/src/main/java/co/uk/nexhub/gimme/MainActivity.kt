@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
 fun Default() {
     GimmeTheme { // A surface container using the 'background' color from the theme
         Surface(
-            color = Color.DarkGray, // or MaterialTheme.colors.background
+            color = Color.DarkGray, // or MaterialTheme.colors.background,
             modifier = Modifier.fillMaxSize(),
         ) {
             val navController = rememberNavController()

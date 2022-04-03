@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import co.uk.nexhub.gimme.BuildConfig
 import co.uk.nexhub.gimme.model.NavigatingStandardData
 import co.uk.nexhub.gimme.ui.elements.HorizontalDivider
 import co.uk.nexhub.gimme.ui.elements.SpaceWidget
@@ -56,8 +57,10 @@ fun HomeScreen(navController: NavController) {
             Spacer(modifier = Modifier.width(6.dp))
 
             Image(painterResource(id = co.uk.nexhub.gimme.R.drawable.header), "Logo header")
+
+            val version = BuildConfig.VERSION_NAME
             Column(Modifier.fillMaxHeight(), horizontalAlignment = Alignment.Start, verticalArrangement = Arrangement.Bottom) {
-                Text("   v1.0.0", fontSize = 8.sp)
+                Text("  v$version", fontSize = 8.sp)
             }
         }
 
