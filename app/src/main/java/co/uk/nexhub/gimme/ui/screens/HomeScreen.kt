@@ -3,9 +3,11 @@ package co.uk.nexhub.gimme.ui.screens
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -37,7 +39,7 @@ fun HomeScreen(navController: NavController) {
     }
 
     //val scrollState = rememberScrollState()
-
+    // Create Icon with Download arrow and Radar Icon overlapping. Maybe add temp button/tool tip saying "Receive Files"
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -48,19 +50,32 @@ fun HomeScreen(navController: NavController) {
     ) {
         Spacer(modifier = Modifier.height(25.dp))
 
-        Row(
-            Modifier
-                .fillMaxWidth(0.75f)
-                .height(50.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
-            Image(painterResource(id = co.uk.nexhub.gimme.R.drawable.logo_alt_textless), "Logo alternative text-less")
+        Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+            Row(
+                Modifier
+                    .fillMaxWidth(0.75f)
+                    .height(50.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
+                Image(painterResource(id = co.uk.nexhub.gimme.R.drawable.logo_alt_textless), "Logo alternative text-less")
 
-            Spacer(modifier = Modifier.width(6.dp))
+                Spacer(modifier = Modifier.width(6.dp))
 
-            Image(painterResource(id = co.uk.nexhub.gimme.R.drawable.header), "Logo header")
+                Image(painterResource(id = co.uk.nexhub.gimme.R.drawable.header), "Logo header")
 
-            val version = BuildConfig.VERSION_NAME
-            Column(Modifier.fillMaxHeight(), horizontalAlignment = Alignment.Start, verticalArrangement = Arrangement.Bottom) {
-                Text("  v$version", fontSize = 8.sp)
+                val version = BuildConfig.VERSION_NAME
+                Column(Modifier.fillMaxHeight(), horizontalAlignment = Alignment.Start, verticalArrangement = Arrangement.Bottom) {
+                    Text("  v$version", fontSize = 8.sp)
+                }
+            }
+            Row(Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.Bottom,
+                horizontalArrangement = Arrangement.SpaceBetween) {
+                Spacer(Modifier.width(1.dp))
+
+                Button(
+                    modifier = Modifier.clip(RoundedCornerShape(50.dp)).width(50.dp).height(50.dp),
+                    onClick = { /*TODO*/ }) { // ToDo add border and that custom icon we thought up
+                    Icon(Icons.Default.KeyboardArrowDown, contentDescription = "Settings Icon")
+                }
             }
         }
 
@@ -90,11 +105,13 @@ fun HomeScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        val rbColors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary)
-        val rbBorder = BorderStroke(1.dp, MaterialTheme.colors.secondary)
+        val rbColors = ButtonDefaults.buttonColors(backgroundColor = Color.Gray)
+        val rbBorder = BorderStroke(1.dp, MaterialTheme.colors.primaryVariant)
         val rbShape = RoundedCornerShape(60)
         val rbContentPadding = PaddingValues(0.dp)
-        val rbModifier = Modifier.width(180.dp).height(90.dp)
+        val rbModifier = Modifier
+            .width(180.dp)
+            .height(90.dp)
 
         Row(
             modifier = Modifier
@@ -111,10 +128,7 @@ fun HomeScreen(navController: NavController) {
                     navController.navigateTo(ParamTestScreenDestination(arg = NavigatingStandardData(args = listOf(text)))) {
                         launchSingleTop = true
                     }}) {
-                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    //Image(painterResource(id = co.uk.nexhub.gimme.R.drawable.logo_alt), "Logo alternative")
-                    Text("Advanced Share (Coming in v0.3.0)", fontSize = 16.sp, color = MaterialTheme.colors.onBackground.copy(alpha = 0.8f), textAlign = TextAlign.Center)
-                }
+                Text("Advanced Share (Coming in v0.3.0)", fontSize = 16.sp, color = MaterialTheme.colors.onBackground.copy(alpha = 0.8f), textAlign = TextAlign.Center)
             }
 
             OutlinedButton(colors = rbColors,
@@ -126,10 +140,7 @@ fun HomeScreen(navController: NavController) {
                     navController.navigateTo(ParamTestScreenDestination(arg = NavigatingStandardData(args = listOf(text)))) {
                         launchSingleTop = true
                     }}) {
-                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    //Image(painterResource(id = co.uk.nexhub.gimme.R.drawable.logo_alt), "Logo alternative")
-                    Text("Share Preset (Coming in v0.3.0)", fontSize = 16.sp, color = MaterialTheme.colors.onBackground.copy(alpha = 0.8f), textAlign = TextAlign.Center)
-                }
+                Text("Preset Share (Coming in v0.3.0)", fontSize = 16.sp, color = MaterialTheme.colors.onBackground.copy(alpha = 0.8f), textAlign = TextAlign.Center)
             }
         }
 
