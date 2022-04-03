@@ -1,7 +1,9 @@
 package com.manueldidonna.wavestimeranimation
 
+import android.content.res.Resources
 import android.graphics.Matrix
 import android.graphics.Shader
+import android.util.TypedValue
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -13,8 +15,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import co.uk.nexhub.gimme.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlin.math.PI
@@ -27,6 +31,9 @@ fun WavesLoadingIndicator(modifier: Modifier, color: Color, progress: Float) {
         val constraintsHeight = maxHeight
         val density = LocalDensity.current
 
+        val screenWidth = LocalConfiguration.current.screenWidthDp
+
+
         val wavesShader by produceState<Shader?>(
             initialValue = null,
             constraintsHeight,
@@ -37,7 +44,10 @@ fun WavesLoadingIndicator(modifier: Modifier, color: Color, progress: Float) {
             value = withContext(Dispatchers.Default) {
                 createWavesShader(
                     width = with(density) { constraintsWidth.roundToPx() },
-                    height = with(density) { constraintsHeight.roundToPx() },
+                    height = kotlin.math.min(
+                        with(density) { constraintsHeight.roundToPx() },
+                        screenWidth
+                    ),
                     color = color
                 )
             }
