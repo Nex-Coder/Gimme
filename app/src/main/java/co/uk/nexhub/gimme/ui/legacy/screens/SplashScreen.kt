@@ -1,4 +1,4 @@
-package co.uk.nexhub.gimme.ui.screens
+package co.uk.nexhub.gimme.ui.legacy.screens
 
 import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.Animatable
@@ -18,12 +18,12 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.sp
 import co.uk.nexhub.gimme.R
-import co.uk.nexhub.gimme.ui.screens.destinations.HomeScreenDestination
+//import co.uk.nexhub.gimme.ui.screens.destinations.HomeScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.delay
 
-@Destination(start = true)
+//@Destination(start = true)
 @Composable
 fun SplashScreen(navigator: DestinationsNavigator) {
     val scale = remember {
@@ -38,7 +38,7 @@ fun SplashScreen(navigator: DestinationsNavigator) {
                 })
         )
         delay(2000L) // Should be 700L
-        navigator.navigate(HomeScreenDestination())
+        //navigator.navigate(HomeScreenDestination())
     }
 
     Column(
