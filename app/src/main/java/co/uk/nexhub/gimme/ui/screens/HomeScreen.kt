@@ -1,5 +1,6 @@
 package co.uk.nexhub.gimme.ui.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -161,6 +162,7 @@ fun GimmeCircleButton(
     }
 }
 
+@SuppressLint("ComposableModifierFactory", "ModifierFactoryExtensionFunction")
 @Composable
 fun defaultCoolButtonModifier(
     width: Dp,
@@ -183,6 +185,7 @@ fun defaultCoolButtonModifier(
     return modifier
 }
 
+@SuppressLint("ComposableModifierFactory", "ModifierFactoryExtensionFunction")
 @Composable
 private fun defaultCoolButtonModifier(width: Dp, height: Dp, shape: Shape): Modifier {
     return Modifier
