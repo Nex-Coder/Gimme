@@ -87,6 +87,7 @@ fun HomeScreen(navController: NavController) {
         )
         VerticalDivider(5.dp)
 
+        //Todo add rectangle buttons
     }
 }
 

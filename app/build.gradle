@@ -6,17 +6,6 @@ plugins {
     id 'com.google.devtools.ksp' version "$kotlin_version-1.0.4"
 }
 
-kotlin {
-    sourceSets {
-        debug {
-            kotlin.srcDir("build/generated/ksp/debug/kotlin")
-        }
-        release {
-            kotlin.srcDir("build/generated/ksp/release/kotlin")
-        }
-    }
-}
-
 android {
     compileSdk 31
 
@@ -64,6 +53,14 @@ android {
             }
         }
     }
+
+    applicationVariants.all { variant ->
+        kotlin.sourceSets {
+            getByName(variant.name) {
+                kotlin.srcDir("build/generated/ksp/${variant.name}/kotlin")
+            }
+        }
+    }
 }
 
 dependencies {
@@ -79,10 +76,12 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
 
-    implementation "androidx.navigation:navigation-compose:2.4.1"
+    implementation "androidx.navigation:navigation-compose:2.4.2"
 
-    implementation 'io.github.raamcosta.compose-destinations:core:1.4.0-beta'
-    ksp 'io.github.raamcosta.compose-destinations:ksp:1.4.0-beta'
+    //noinspection GradleDependency
+    implementation 'io.github.raamcosta.compose-destinations:core:1.4.2-beta'
+    //noinspection GradleDependency
+    ksp 'io.github.raamcosta.compose-destinations:ksp:1.4.2-beta'
 
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
 }
