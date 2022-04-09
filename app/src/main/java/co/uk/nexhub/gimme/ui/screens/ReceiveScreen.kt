@@ -22,21 +22,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import co.uk.nexhub.gimme.BuildConfig
+import co.uk.nexhub.gimme.R
 import co.uk.nexhub.gimme.ui.elements.*
 import co.uk.nexhub.gimme.ui.theme.extras
 import com.ramcosta.composedestinations.annotation.Destination
 
 @Destination
 @Composable
-fun HomeScreen(navController: NavController) {
+fun ReceiveScreen(navController: NavController) {
     val scrollState = rememberScrollState()
 
     DefaultScreenWrapper(scrollState) {
         AppHeader()
 
-        GimmeCircleButton(imageId = co.uk.nexhub.gimme.R.drawable.send_gray) {
+        GimmeCircleButton(imageId = R.drawable.radar_download_gray) {
             Text(
-                "Send Files",
+                "Gimme Files",
                 fontSize = 54.sp,
                 color = MaterialTheme.colors.background.copy(alpha = 0.85f)
             )
@@ -52,9 +53,9 @@ fun HomeScreen(navController: NavController) {
         Spacer(Modifier.height(8.dp))
 
         val height = 80.dp
-        GimmeRectangleButton(imageId = co.uk.nexhub.gimme.R.drawable.advance_gray, imageScale = 0.15f, width = 390.dp, height = height, corner = 15.dp) {
+        GimmeRectangleButton(imageId = R.drawable.contacts_gray, imageScale = 0.15f, width = 390.dp, height = height, corner = 15.dp) {
             Text(
-                "Advanced Share",
+                "Add Auto-Receiver",
                 fontSize = 22.sp,
                 color = MaterialTheme.colors.background.copy(alpha = 0.85f)
             )
@@ -62,23 +63,12 @@ fun HomeScreen(navController: NavController) {
 
         Spacer(Modifier.height(8.dp))
 
-        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.Top, horizontalArrangement = Arrangement.SpaceBetween) {
-            val width = 182.dp
-            GimmeRectangleButton(imageId = co.uk.nexhub.gimme.R.drawable.control_gray, imageScale = 0.3f, width = width, height = height, corner = 15.dp) {
-                Text(
-                    "Create Preset",
-                    fontSize = 20.sp,
-                    color = MaterialTheme.colors.background.copy(alpha = 0.85f)
-                )
-            }
-
-            GimmeRectangleButton(imageId = co.uk.nexhub.gimme.R.drawable.preset_share_gray, imageScale = 0.3f, width = width, height = height, corner = 15.dp) {
-                Text(
-                    "Share Via Preset",
-                    fontSize = 20.sp,
-                    color = MaterialTheme.colors.background.copy(alpha = 0.85f)
-                )
-            }
+        GimmeRectangleButton(imageId = R.drawable.prset_download_gray, imageScale = 0.15f, width = 390.dp, height = height, corner = 15.dp) {
+            Text(
+                "Gimme Via Preset",
+                fontSize = 22.sp,
+                color = MaterialTheme.colors.background.copy(alpha = 0.85f)
+            )
         }
     }
 }

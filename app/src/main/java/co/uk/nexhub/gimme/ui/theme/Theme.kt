@@ -75,6 +75,8 @@ fun GimmeTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable 
     )
 }
 
+// ------EXTRAS------
+// Colours
 data class ExtraColors(val solidColor: Color,
                        val tertiary: Color,
                        val tertiaryVariant: Color,
@@ -89,3 +91,15 @@ data class ExtraColors(val solidColor: Color,
 fun MaterialTheme.extras(): ExtraColors {
     return if (mDarkTheme.value == true) { DarkExtraColorPalette } else { LightExtraColorPalette }
 }
+
+// Typography
+data class ExtraFonts(val solidColor: Color,
+                       val tertiary: Color,
+                       val tertiaryVariant: Color,
+                       val quaternary: Color,
+                       val quaternaryVariant: Color,
+                       val quinary: Color,
+                       val quinaryVariant: Color,
+                       val senary: Color,
+                       val senaryVariant: Color,
+                       val topBackground: Color)

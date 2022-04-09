@@ -38,7 +38,7 @@ fun Default() {
             val navController = rememberNavController()
 
             Scaffold(
-                bottomBar = { BottomBar(navController); hideNavigation() },
+                bottomBar = { BottomBar(navController); /*hideNavigation()*/ },
             ) {
                 DestinationsNavHost(navGraph = NavGraphs.root, navController = navController)
             }
