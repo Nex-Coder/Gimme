@@ -86,4 +86,6 @@ dependencies {
     ksp 'io.github.raamcosta.compose-destinations:ksp:1.4.2-beta'
 
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
+
+    implementation "com.google.accompanist:accompanist-permissions:0.24.6-alpha"
 }
