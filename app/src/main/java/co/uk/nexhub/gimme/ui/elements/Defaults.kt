@@ -19,6 +19,6 @@ fun DefaultScreenWrapper(scrollState: ScrollState = rememberScrollState(),
             .fillMaxSize()
             .padding(horizontal = 15.dp)
             .verticalScroll(scrollState),
-        content = content
+        content = { content(); Spacer(Modifier.height(70.dp)) }
     )
 }

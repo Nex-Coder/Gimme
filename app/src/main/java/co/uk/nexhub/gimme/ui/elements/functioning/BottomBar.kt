@@ -1,6 +1,8 @@
 package co.uk.nexhub.gimme.ui.elements.functioning
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
@@ -8,7 +10,9 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import co.uk.nexhub.gimme.R
@@ -36,6 +40,8 @@ fun BottomBar(navController: NavController) {
 
     isShown?.let {
         BottomNavigationBar(
+            modifier = Modifier
+                .height(56.dp),
             show = it,
             items = listOf(
                 BottomNavItem(

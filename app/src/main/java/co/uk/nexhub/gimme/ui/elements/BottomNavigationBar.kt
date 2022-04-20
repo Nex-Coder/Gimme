@@ -32,8 +32,8 @@ fun BottomNavigationBar(
         enableDestinationChangeListening(false, navController)
         BottomNavigation(
             modifier = modifier,
-            backgroundColor = Color.DarkGray,
-            elevation = 5.dp
+            backgroundColor = Color.DarkGray.copy(alpha = 0.97f),
+            elevation = 0.dp
         ) {
             items.forEach { item ->
                 val obvCurrentDestination: String? by currentDestination.observeAsState()

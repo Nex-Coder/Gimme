@@ -2,6 +2,12 @@ package co.uk.nexhub.gimme.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
+val Purple010 = Color(0xFFF8DEFF)
+val Purple040 = Color(0xFFD9A5FF)
+val Purple050 = Color(0xFFD59BFF)
+val Purple060 = Color(0xFFD08FFF)
+val Purple100 = Color(0xFFD96BFF)
+
 val Purple200 = Color(0xFFD14DFF)
 val Purple500 = Color(0xFF8E00F3)
 val Purple700 = Color(0xFF3700B3)

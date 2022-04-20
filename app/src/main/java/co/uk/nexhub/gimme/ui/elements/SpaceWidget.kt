@@ -34,7 +34,7 @@ fun SpaceWidget(modifier: Modifier) {
         Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
             //Text("Internal", fontSize = 13.sp)
 
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(2.dp))
 
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
@@ -47,25 +47,29 @@ fun SpaceWidget(modifier: Modifier) {
 
             Spacer(Modifier.padding(vertical = 2.dp))
 
-            TextCircleProgressIndicator(progress = 1f, modifier = Modifier.width(45.dp))
+            TextCircleProgressIndicatorHollow(progress = 1f, modifier = Modifier.width(45.dp))
         }
 
         HorizontalDivider(10.dp, 1f)
 
 
         Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
-            composeItem("App", painterResource(co.uk.nexhub.gimme.R.drawable.android),  MaterialTheme.colors.primary, 1f)
-            composeItem("Video", painterResource(co.uk.nexhub.gimme.R.drawable.video_icon_96_xxxhdpi),  MaterialTheme.colors.secondary, 1f)
-            composeItem("Photo", painterResource(co.uk.nexhub.gimme.R.drawable.camera),  MaterialTheme.extras().tertiary, 1f)
-            composeItem("Other", painterResource(co.uk.nexhub.gimme.R.drawable.file_96_hdpi),  MaterialTheme.extras().quaternary, 1f)
+            ComposeItem(painterResource(co.uk.nexhub.gimme.R.drawable.android), "App", "500MB", 1f, MaterialTheme.colors.primary)
+            ComposeItem(painterResource(co.uk.nexhub.gimme.R.drawable.video_icon_96_xxxhdpi), "Video",  "500MB", 1f, MaterialTheme.colors.secondary)
+            ComposeItem(painterResource(co.uk.nexhub.gimme.R.drawable.camera), "Photo", "500MB", 1f, MaterialTheme.extras().tertiary)
+            ComposeItem(painterResource(co.uk.nexhub.gimme.R.drawable.file_96_hdpi), "Other", "500MB", 1f, MaterialTheme.extras().quaternary)
         }
     }
 }
 
 @Composable
 @SuppressLint("ModifierParameter")
-private fun composeItem(name: String, icon: Painter, color: Color, percentage: Float? = null, value: String? = null, fontSize: TextUnit = 11.sp, iconModifier: Modifier = Modifier.height(24.dp)) {
+private fun ComposeItem(icon: Painter, name: String, byteSize: String, percentage: Float, color: Color, fontSize: TextUnit = 11.sp, iconModifier: Modifier = Modifier.height(24.dp)) {
     SpaceWidgetItem(
+        icon,
+        name,
+        byteSize,
+        percentage,
         Modifier
             .clip(CircleShape)
             .background(
@@ -73,10 +77,6 @@ private fun composeItem(name: String, icon: Painter, color: Color, percentage: F
                 RoundedCornerShape(50)
             )
             .fillMaxWidth(),
-        name,
-        icon,
-        percentage,
-        value,
         iconModifier = iconModifier,
         color = MaterialTheme.extras().topBackground,
         textAlign = TextAlign.Left,

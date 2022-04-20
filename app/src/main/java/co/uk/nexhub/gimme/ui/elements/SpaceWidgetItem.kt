@@ -4,8 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.material.LocalContentAlpha
-import androidx.compose.material.LocalContentColor
 import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -24,15 +22,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
 
 @Composable
-fun SpaceWidgetItem(modifier: Modifier = Modifier,
-                    name: String,
-                    icon: Painter,
-                    percentage: Float? = null,
-                    value: String? = null,
+fun SpaceWidgetItem(icon: Painter,
+                    category: String,
+                    bytesSize: String,
+                    percentage: Float,
+                    modifier: Modifier = Modifier,
                     horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
                     verticalAlignment: Alignment.Vertical = Alignment.CenterVertically,
                     iconModifier: Modifier = Modifier,
-                    tint: Color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current),
                     textModifier: Modifier = Modifier,
                     color: Color = Color.Unspecified,
                     fontSize: TextUnit = TextUnit.Unspecified,
@@ -49,14 +46,11 @@ fun SpaceWidgetItem(modifier: Modifier = Modifier,
                     onTextLayout: (TextLayoutResult) -> Unit = {},
                     style: TextStyle = LocalTextStyle.current
 ) {
-    val progress = if (percentage != null) String.format("%.0f%%",(percentage * 100)) else null
-    val text = if (progress == null && value == null)  "$name - Error"
-    else if (progress == null)  "$name - $value"
-    else if (value == null)  "$name - $progress"
-    else  "$name - $value / $progress"
+    val progress = String.format("%.0f%%",(percentage * 100))
+    val text = "$category - $bytesSize / $progress"
 
     Row(modifier, horizontalArrangement, verticalAlignment) {
-        Image(icon, name, iconModifier.aspectRatio(1.22f))
+        Image(icon, category, iconModifier.aspectRatio(1.22f))
         Text(text, textModifier, color, fontSize, fontStyle, fontWeight, fontFamily, letterSpacing, textDecoration, textAlign, lineHeight, overflow, softWrap, maxLines, onTextLayout, style)
     }
 }

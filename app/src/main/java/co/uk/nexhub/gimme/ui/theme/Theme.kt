@@ -43,7 +43,10 @@ private val DarkExtraColorPalette = ExtraColors(
     quinaryVariant = LimeGreen600,
     senary = Blue500,
     senaryVariant = Blue600,
-    topBackground = Grey600
+    topBackground = Grey600,
+    Purple100,
+    Purple060,
+    Purple040
 )
 
 private val LightExtraColorPalette = ExtraColors(
@@ -56,7 +59,10 @@ private val LightExtraColorPalette = ExtraColors(
     quinaryVariant = LimeGreen600,
     senary = Blue700,
     senaryVariant = Blue600,
-    topBackground = Grey400
+    topBackground = Grey400,
+    Purple050,
+    Purple040,
+    Purple010
 )
 
 
@@ -86,7 +92,10 @@ data class ExtraColors(val solidColor: Color,
                        val quinaryVariant: Color,
                        val senary: Color,
                        val senaryVariant: Color,
-                       val topBackground: Color)
+                       val topBackground: Color,
+                       val primaryHardLighting: Color,
+                       val primaryMedianLighting: Color,
+                       val primarySoftLighting: Color)
 
 fun MaterialTheme.extras(): ExtraColors {
     return if (mDarkTheme.value == true) { DarkExtraColorPalette } else { LightExtraColorPalette }
@@ -94,12 +103,12 @@ fun MaterialTheme.extras(): ExtraColors {
 
 // Typography
 data class ExtraFonts(val solidColor: Color,
-                       val tertiary: Color,
-                       val tertiaryVariant: Color,
-                       val quaternary: Color,
-                       val quaternaryVariant: Color,
-                       val quinary: Color,
-                       val quinaryVariant: Color,
-                       val senary: Color,
-                       val senaryVariant: Color,
-                       val topBackground: Color)
+                      val tertiary: Color,
+                      val tertiaryVariant: Color,
+                      val quaternary: Color,
+                      val quaternaryVariant: Color,
+                      val quinary: Color,
+                      val quinaryVariant: Color,
+                      val senary: Color,
+                      val senaryVariant: Color,
+                      val topBackground: Color)
