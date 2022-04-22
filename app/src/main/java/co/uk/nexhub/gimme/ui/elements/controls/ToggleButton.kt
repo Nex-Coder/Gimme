@@ -1,6 +1,8 @@
 package co.uk.nexhub.gimme.ui.elements.controls
 
 import android.util.Log
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -17,14 +19,22 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import co.uk.nexhub.gimme.R
 import co.uk.nexhub.gimme.ui.elements.base.Circle
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ToggleButton(onClick: ((Boolean) -> Unit), toggled: Boolean = false, width: Dp = 95.dp) {
-    val aspectRatio = 2.8f  // TODO Animate toggle, add outer shadow
+    val aspectRatio = 2.8f
+
+    var isToggled by remember { mutableStateOf(toggled) }
+
+    val offsetAnimation: Float by animateFloatAsState(
+        if (isToggled) 0.66f else 0.02f
+    )
 
     Row(
         Modifier
@@ -33,11 +43,14 @@ fun ToggleButton(onClick: ((Boolean) -> Unit), toggled: Boolean = false, width: 
             .background(MaterialTheme.colors.primary.copy(0.3f), CircleShape)
             .border(1.dp, MaterialTheme.colors.primaryVariant, CircleShape)
             .clip(CircleShape)
-            .clickable {onClick.invoke(toggled)},
+            .clickable {
+                isToggled = !isToggled
+                onClick.invoke(toggled)
+                       },
         Arrangement.Start,
         Alignment.CenterVertically
     ) {
-        Spacer(Modifier.fillMaxWidth(if (toggled) 0.66f else 0.02f))
+        Spacer(Modifier.fillMaxWidth(offsetAnimation)) // change me
         Circle(width.div(aspectRatio).minus(4.dp))
     }
 }
