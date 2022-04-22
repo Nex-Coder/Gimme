@@ -15,10 +15,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun Circle(size: Dp) {
+fun Circle(size: Dp, contentBrush: Brush, borderBrush: Brush) {
     Box(Modifier
-        .background(Brush.linearGradient(listOf(MaterialTheme.colors.primaryVariant, MaterialTheme.colors.primary)), CircleShape)
-        .border(1.dp, MaterialTheme.colors.primaryVariant, CircleShape)
+        .background(contentBrush, CircleShape)
+        .border(1.dp, borderBrush, CircleShape)
         .size(size)
         .aspectRatio(1f)) {}
 }

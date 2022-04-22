@@ -27,9 +27,7 @@ fun SettingsScreen(arg: String?) {
         ) {
             var toggled by remember { mutableStateOf(false) }
 
-            ToggleButton(
-                {isToggled -> toggled = !isToggled}
-                , toggled)
+            ToggleButton({}, enabled = true)
         }
     }
 }

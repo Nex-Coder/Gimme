@@ -1,12 +1,7 @@
 package co.uk.nexhub.gimme.ui.elements.controls
 
-import android.util.Log
 import androidx.compose.animation.core.*
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.*
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -16,18 +11,28 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.clipToBounds
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import co.uk.nexhub.gimme.R
 import co.uk.nexhub.gimme.ui.elements.base.Circle
+import co.uk.nexhub.gimme.ui.model.ToggleButtonBrushes
+import co.uk.nexhub.gimme.ui.model.ToggleButtonDefaults
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ToggleButton(onClick: ((Boolean) -> Unit), toggled: Boolean = false, width: Dp = 95.dp) {
+fun ToggleButton(onClick: ((Boolean) -> Unit),
+                 modifier: Modifier = Modifier,
+                 toggled: Boolean = false,
+                 width: Dp = 95.dp,
+                 enabled: Boolean = true,
+                 interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+                 elevation: ButtonElevation? = ButtonDefaults.elevation(23.dp, 30.dp, 1.dp, 25.dp, 24.dp),
+                 shape: Shape = CircleShape,
+                 border: BorderStroke? = null,
+                 brush: ToggleButtonBrushes = ToggleButtonDefaults.toggleButtonBrushes()
+) {
     val aspectRatio = 2.8f
 
     var isToggled by remember { mutableStateOf(toggled) }
@@ -36,21 +41,40 @@ fun ToggleButton(onClick: ((Boolean) -> Unit), toggled: Boolean = false, width: 
         if (isToggled) 0.66f else 0.02f
     )
 
-    Row(
-        Modifier
-            .width(width)
-            .aspectRatio(aspectRatio)
-            .background(MaterialTheme.colors.primary.copy(0.3f), CircleShape)
-            .border(1.dp, MaterialTheme.colors.primaryVariant, CircleShape)
-            .clip(CircleShape)
-            .clickable {
-                isToggled = !isToggled
-                onClick.invoke(toggled)
-                       },
-        Arrangement.Start,
-        Alignment.CenterVertically
+    val contentBrush by brush.contentBrush(enabled)
+    val borderBrush by brush.borderBrush(enabled)
+
+    Surface(
+        modifier = modifier,
+        shape = shape,
+        color = Color.Transparent,
+        contentColor = Color.Transparent,
+        border = border,
+        elevation = elevation?.elevation(enabled, interactionSource)?.value ?: 0.dp,
+        onClick = {},
+        enabled = enabled,
+        role = Role.Button,
+        interactionSource = interactionSource,
+        indication = rememberRipple()
     ) {
-        Spacer(Modifier.fillMaxWidth(offsetAnimation)) // change me
-        Circle(width.div(aspectRatio).minus(4.dp))
+        Row(
+            Modifier
+                .width(width)
+                .aspectRatio(aspectRatio)
+                .background(brush.backgroundBrush(enabled).value, shape)
+                .border(1.dp, borderBrush, shape)
+                .clip(shape)
+                .clickable {
+                    if (enabled) {
+                        isToggled = !isToggled
+                        onClick.invoke(toggled)
+                    }
+                },
+            Arrangement.Start,
+            Alignment.CenterVertically
+        ) {
+            Spacer(Modifier.fillMaxWidth(offsetAnimation)) // change me
+            Circle(width.div(aspectRatio).minus(4.dp), contentBrush, borderBrush)
+        }
     }
 }
