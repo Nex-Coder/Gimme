@@ -25,9 +25,7 @@ fun SettingsScreen(arg: String?) {
         BoxWithContext("Pingable",
             "Users can see & ping your device when you aren’t looking shares/files."
         ) {
-            var toggled by remember { mutableStateOf(false) }
-
-            ToggleButton({}, enabled = true)
+            ToggleButton({})
         }
     }
 }
