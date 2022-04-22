@@ -1,7 +1,6 @@
 package co.uk.nexhub.gimme.ui.utility
 
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.composed
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Paint

@@ -1,9 +1,7 @@
-package com.manueldidonna.wavestimeranimation
+package co.uk.nexhub.gimme.ui.elements.animations
 
-import android.content.res.Resources
 import android.graphics.Matrix
 import android.graphics.Shader
-import android.util.TypedValue
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -18,7 +16,6 @@ import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
-import co.uk.nexhub.gimme.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlin.math.PI

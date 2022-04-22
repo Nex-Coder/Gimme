@@ -8,8 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import co.uk.nexhub.gimme.ui.elements.AppHeader
-import co.uk.nexhub.gimme.ui.elements.DefaultScreenWrapper
+import co.uk.nexhub.gimme.ui.elements.layout.AppHeader
+import co.uk.nexhub.gimme.ui.elements.parents.DefaultScreenWrapper
 import co.uk.nexhub.gimme.ui.theme.extras
 import com.ramcosta.composedestinations.annotation.Destination
 

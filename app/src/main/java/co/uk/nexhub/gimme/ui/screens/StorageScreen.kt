@@ -34,13 +34,17 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.graphics.component1
-import androidx.core.graphics.component2
 import co.uk.nexhub.gimme.R
 import co.uk.nexhub.gimme.lib.filesystem.GFileSystem.getVolumes
 import co.uk.nexhub.gimme.model.filesystem.ByteSize
 import co.uk.nexhub.gimme.permissionState
-import co.uk.nexhub.gimme.ui.elements.*
+import co.uk.nexhub.gimme.ui.elements.items.BarItem
+import co.uk.nexhub.gimme.ui.elements.items.TextCircleProgressIndicator
+import co.uk.nexhub.gimme.ui.elements.layout.AppHeader
+import co.uk.nexhub.gimme.ui.elements.layout.HeaderDivider
+import co.uk.nexhub.gimme.ui.elements.layout.HorizontalDivider
+import co.uk.nexhub.gimme.ui.elements.layout.VerticalDivider
+import co.uk.nexhub.gimme.ui.elements.parents.DefaultScreenWrapper
 import co.uk.nexhub.gimme.ui.theme.extras
 import co.uk.nexhub.gimme.ui.theme.fontCambay
 import co.uk.nexhub.gimme.ui.utility.PermissionUtility
@@ -292,7 +296,7 @@ fun SDCardComposed(volume: StorageVolume, primaryOnly: Boolean) {
 @Composable
 @SuppressLint("ModifierParameter")
 private fun ComposeItem(icon: Painter, category: String, bytesSize: String, percentage: Float, modifier: Modifier = Modifier, fontSize: TextUnit = 15.sp, iconModifier: Modifier = Modifier.height(24.dp)) {
-    SpaceWidgetItem(
+    BarItem(
         icon,
         category,
         bytesSize,

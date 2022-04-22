@@ -1,4 +1,4 @@
-package co.uk.nexhub.gimme.ui.elements
+package co.uk.nexhub.gimme.ui.elements.layout
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -14,13 +14,14 @@ import co.uk.nexhub.gimme.BuildConfig
 import co.uk.nexhub.gimme.R
 
 @Composable
-fun AppHeader(spacers: Dp = 25.dp) {
+fun AppHeader(bottomPadding: Dp = 0.dp, spacers: Dp = 25.dp) {
     Spacer(modifier = Modifier.height(spacers))
 
     Row(
         Modifier
             .fillMaxWidth(0.75f)
-            .height(50.dp),
+            .height(50.dp)
+            .padding(bottom = bottomPadding),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {

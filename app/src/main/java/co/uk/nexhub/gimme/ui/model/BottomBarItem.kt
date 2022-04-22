@@ -1,7 +1,6 @@
-package co.uk.nexhub.gimme.ui.elements
+package co.uk.nexhub.gimme.ui.model
 
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import com.ramcosta.composedestinations.spec.Direction
 

@@ -1,4 +1,4 @@
-package co.uk.nexhub.gimme.ui.elements
+package co.uk.nexhub.gimme.ui.elements.parents
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -17,11 +17,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
+import co.uk.nexhub.gimme.ui.model.BottomNavItem
 
 var currentDestination = MutableLiveData("")
 
 @Composable
-fun BottomNavigationBar(
+fun BottomBar(
     items: List<BottomNavItem>,
     navController: NavController,
     modifier: Modifier = Modifier,

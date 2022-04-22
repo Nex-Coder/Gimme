@@ -1,4 +1,4 @@
-package co.uk.nexhub.gimme.ui.elements
+package co.uk.nexhub.gimme.ui.elements.controls
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -14,12 +14,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
@@ -88,16 +86,15 @@ fun GimmeCircleButton(
                 ),
                 CircleShape
             )
-        if (true) {
-            lModifier = lModifier.border(
-                width,
-                Brush.linearGradient(
-                    0f to MaterialTheme.colors.background.copy(alpha = 0.8f),
-                    0.4f to Color.Transparent
-                ),
-                CircleShape
-            )
-        }
+        lModifier = lModifier.border(
+            width,
+            Brush.linearGradient(
+                0f to MaterialTheme.colors.background.copy(alpha = 0.8f),
+                0.4f to Color.Transparent
+            ),
+            CircleShape
+        )
+
 
         OutlinedButton(
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
@@ -174,7 +171,7 @@ fun GimmeRectangleButton(
             .padding(bottom = shadowPadding), contentAlignment = Alignment.TopCenter
     ) {
 
-        var lModifier = Modifier
+        val lModifier = Modifier
             .width(width)
             .height(height)
             .background(
@@ -188,16 +185,7 @@ fun GimmeRectangleButton(
                 ),
                 shape
             )
-        if (false) {
-            lModifier = lModifier.border(
-                width,
-                Brush.linearGradient(
-                    0f to MaterialTheme.colors.background.copy(alpha = 0.8f),
-                    0.4f to Color.Transparent,
-                ),
-                shape
-            )
-        }
+
         OutlinedButton(
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
             border = border,

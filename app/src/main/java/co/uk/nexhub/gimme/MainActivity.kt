@@ -5,9 +5,6 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.IntentSenderRequest
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Scaffold
@@ -17,13 +14,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.rememberNavController
-import co.uk.nexhub.gimme.ui.elements.functioning.BottomBar
+import co.uk.nexhub.gimme.ui.elements.navigation.BottomNavigationBar
 import co.uk.nexhub.gimme.ui.screens.NavGraphs
 import co.uk.nexhub.gimme.ui.theme.GimmeTheme
 import com.google.accompanist.permissions.*
 import com.ramcosta.composedestinations.DestinationsNavHost
 import java.lang.ref.WeakReference
-import java.util.jar.Manifest
 
 
 fun getMainContext(): Context? { return context?.get()!! }
@@ -67,7 +63,7 @@ fun Default() {
             val navController = rememberNavController()
 
             Scaffold(
-                bottomBar = { BottomBar(navController); /*hideNavigation()*/ },
+                bottomBar = { BottomNavigationBar(navController); /*hideNavigation()*/ },
             ) {
                 DestinationsNavHost(navGraph = NavGraphs.root, navController = navController)
             }

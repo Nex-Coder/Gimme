@@ -1,26 +1,26 @@
 package co.uk.nexhub.gimme.model.filesystem
 
 class ByteSize(bytes: Long) {
-    private val UNIT = 1000.toDouble()
+    private val BYTE_UNIT = 1000.toDouble()
 
     var bytes: Double = bytes.toDouble()
 
     fun update(bytes: Long) { this.bytes = bytes.toDouble() }
 
     private fun kb(): Double {
-        return (bytes / UNIT)
+        return (bytes / BYTE_UNIT)
     }
 
     private fun mb(): Double {
-        return (kb() / UNIT)
+        return (kb() / BYTE_UNIT)
     }
 
     private fun gb(): Double {
-        return (mb() / UNIT)
+        return (mb() / BYTE_UNIT)
     }
 
     private fun tb(): Double {
-        return (gb() / UNIT)
+        return (gb() / BYTE_UNIT)
     }
 
     fun unit(bytes: Double = this.bytes): Double {

@@ -1,4 +1,4 @@
-package co.uk.nexhub.gimme.ui.elements
+package co.uk.nexhub.gimme.ui.elements.layout
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image

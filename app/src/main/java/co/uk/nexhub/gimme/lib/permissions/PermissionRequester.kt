@@ -6,12 +6,10 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.content.pm.PackageManager
 import android.os.Build
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
 import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
 import androidx.core.content.ContextCompat
 import co.uk.nexhub.gimme.getMainContext
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -45,7 +43,7 @@ object PermissionRequester {
         )
 
         //request(MANAGE_EXTERNAL_STORAGE_PERMS, MANAGE_EXTERNAL_STORAGE_CODE)
-        return true;
+        return true
     }
 
     private fun showInContextUI(any: Any?) {

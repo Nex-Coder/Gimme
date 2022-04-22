@@ -1,4 +1,4 @@
-package co.uk.nexhub.gimme.ui.elements
+package co.uk.nexhub.gimme.ui.elements.parents
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.*

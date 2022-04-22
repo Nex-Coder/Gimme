@@ -1,4 +1,4 @@
-package co.uk.nexhub.gimme.ui.elements
+package co.uk.nexhub.gimme.ui.elements.items
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
@@ -8,7 +8,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
@@ -18,8 +17,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.*
-import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
-import androidx.compose.ui.graphics.nativeCanvas
 
 @Composable
 fun TextCircleProgressIndicatorHollow(modifier: Modifier = Modifier,
@@ -87,7 +84,7 @@ fun TextCircleProgressIndicator(progress: Float, modifier: Modifier = Modifier, 
                                 maxLines: Int = Int.MAX_VALUE,
                                 onTextLayout: (TextLayoutResult) -> Unit = {},
                                 style: TextStyle = LocalTextStyle.current,
-    centerPaddingAdjustment: Dp = 12.dp) {
+                                centerPaddingAdjustment: Dp = 12.dp) {
     Box(modifier, Alignment.Center) {
         Canvas(Modifier.width(145.dp).height(145.dp)) {
             drawArc(brush = brush, startAngle = 270f, sweepAngle = progress * 360, useCenter = true)
