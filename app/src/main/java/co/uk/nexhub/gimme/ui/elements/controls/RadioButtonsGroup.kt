@@ -42,6 +42,7 @@ fun RadioButtonsGroup(choices: Array<RadioButtonChoice>) {
                         choice.action.invoke()
                     }
                 )
+                RadioButton(selected = true, onClick = { /*TODO*/ })
                 Text(
                     text = choice.name,
                     modifier = Modifier.padding(start = 16.dp),
