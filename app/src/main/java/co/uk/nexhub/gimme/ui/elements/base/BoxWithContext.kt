@@ -16,6 +16,7 @@ import co.uk.nexhub.gimme.ui.theme.fontCambay
 fun BoxWithContext(name: String,
                    description: String,
                    modifier: Modifier = Modifier,
+                   boxModifier: Modifier = Modifier,
                    inline: Boolean = true,
                    contextWeight: Float = if (inline) 0.68f else 1f,
                    nameColor: Color = MaterialTheme.extras().solidColor.copy(alpha = 0.9f),
@@ -29,10 +30,10 @@ fun BoxWithContext(name: String,
             Text(description, Modifier, descriptionColor, fontSize.div(2.1f), fontFamily = fontCambay)
         }
         if (inline) {
-            Box(Modifier.weight(0.99f - contextWeightFinal, false), Alignment.CenterEnd, false, content)
+            Box(boxModifier.weight(0.99f - contextWeightFinal, false), Alignment.CenterEnd, false, content)
         }
     }
     if (!inline) {
-        Box(Modifier, Alignment.CenterEnd, false, content)
+        Box(boxModifier, Alignment.CenterStart, false, content)
     }
 }
