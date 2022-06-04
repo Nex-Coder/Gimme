@@ -24,16 +24,29 @@ fun BoxWithContext(name: String,
                    fontSize: TextUnit = 30.sp,
                    content: @Composable BoxScope.() -> Unit) {
     val contextWeightFinal: Float = if (contextWeight > 0.98f) 0.98f else contextWeight
-    Row(modifier, verticalAlignment = Alignment.CenterVertically) {
-        Column(Modifier.weight(contextWeightFinal, true), Arrangement.Top, Alignment.Start) {
-            Text(name, Modifier, nameColor, fontSize, fontFamily = fontCambay)
-            Text(description, Modifier, descriptionColor, fontSize.div(2.1f), fontFamily = fontCambay)
+    Column(modifier, verticalArrangement = Arrangement.Center) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Column(Modifier.weight(contextWeightFinal, true), Arrangement.Top, Alignment.Start) {
+                Text(name, Modifier, nameColor, fontSize, fontFamily = fontCambay)
+                Text(
+                    description,
+                    Modifier,
+                    descriptionColor,
+                    fontSize.div(2.1f),
+                    fontFamily = fontCambay
+                )
+            }
+            if (inline) {
+                Box(
+                    boxModifier.weight(0.99f - contextWeightFinal, false),
+                    Alignment.CenterEnd,
+                    false,
+                    content
+                )
+            }
         }
-        if (inline) {
-            Box(boxModifier.weight(0.99f - contextWeightFinal, false), Alignment.CenterEnd, false, content)
+        if (!inline) {
+            Box(boxModifier, Alignment.CenterStart, false, content)
         }
-    }
-    if (!inline) {
-        Box(boxModifier, Alignment.CenterStart, false, content)
     }
 }

@@ -33,6 +33,9 @@ import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import co.uk.nexhub.gimme.ui.model.GroupHost
+import co.uk.nexhub.gimme.ui.model.GroupValue
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlin.math.roundToInt
 
 /*================================================================================================*/
@@ -40,7 +43,7 @@ import kotlin.math.roundToInt
 /*================================================================================================*/
 /*-----region Standard Radio Buttons-----*/
 @Composable
-fun ExtendedRadioButton(
+fun <T> ExtendedRadioButton(
     selected: Boolean,
     onClick: (() -> Unit)?,
     modifier: Modifier = Modifier,
@@ -51,6 +54,7 @@ fun ExtendedRadioButton(
     dotMultiplier: Float = 1f,
     scale: Float = 1f,
     strokeWidth: Dp = RadioStrokeWidth * scale,
+    groupValue: GroupValue<T>? = null
 ) {
     val buttonRippleRadius = RadioButtonRippleRadius * scale
     val buttonSize = RadioButtonSize * scale
@@ -67,7 +71,7 @@ fun ExtendedRadioButton(
         if (onClick != null) {
             Modifier.selectable(
                 selected = selected,
-                onClick = onClick,
+                onClick = { groupValue?.setHostValue(); onClick.invoke()},
                 enabled = enabled,
                 role = Role.RadioButton,
                 interactionSource = interactionSource,
