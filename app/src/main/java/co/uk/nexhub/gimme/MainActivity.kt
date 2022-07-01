@@ -25,8 +25,6 @@ import java.lang.ref.WeakReference
 fun getMainContext(): Context? { return context?.get()!! }
 private var context: WeakReference<Context>? = null
 
-//@OptIn(ExperimentalPermissionsApi::class)
-//var permissionStates: MultiplePermissionsState? = null
 @OptIn(ExperimentalPermissionsApi::class)
 var permissionState: PermissionState? = null
 

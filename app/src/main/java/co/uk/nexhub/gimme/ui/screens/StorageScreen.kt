@@ -187,18 +187,17 @@ fun SDCardComposed(volume: StorageVolume, primaryOnly: Boolean) {
 
         Spacer(Modifier.height(4.dp))
 
-        Box(Modifier.coloredShadow(MaterialTheme.extras().solidColor, offsetY = 6.dp, alpha = 0.70f, borderRadius = 40.dp)) {
+        Box(Modifier.coloredShadow(MaterialTheme.extras().solidColor, offsetY = 6.dp, alpha = 0.25f, borderRadius = 10.dp)) {
             Row(
                 Modifier
                     .fillMaxWidth()
                     .height(185.dp)
                     .background(
-                        Brush.linearGradient(listOf(
-                            MaterialTheme.extras().primaryHardLighting,
-                            MaterialTheme.extras().primaryMedianLighting,
-                            MaterialTheme.extras().primarySoftLighting,
-                            MaterialTheme.extras().primarySoftLighting,
-                            MaterialTheme.extras().primarySoftLighting),
+                        Brush.linearGradient(
+                            0f to MaterialTheme.extras().primaryHardLighting,
+                            0.2f to MaterialTheme.extras().primaryMedianLighting,
+                            0.4f to MaterialTheme.extras().primarySoftLighting,
+                            1f to MaterialTheme.extras().primarySoftLighting,
                             start = Offset(0f, Float.POSITIVE_INFINITY),
                             end = Offset(Float.POSITIVE_INFINITY, 0f)
                         ),
@@ -335,8 +334,8 @@ fun BiggestFilesComposed(volume: StorageVolume, primaryOnly: Boolean) {
             Modifier.coloredShadow(
                 MaterialTheme.extras().solidColor,
                 offsetY = 6.dp,
-                alpha = 0.70f,
-                borderRadius = 40.dp
+                alpha = 0.25f,
+                borderRadius = 10.dp
             )
         ) {
             Row(
