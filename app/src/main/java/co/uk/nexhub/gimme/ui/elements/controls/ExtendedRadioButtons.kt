@@ -7,14 +7,11 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectable
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.composed
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -26,16 +23,12 @@ import androidx.compose.ui.layout.LayoutModifier
 import androidx.compose.ui.layout.Measurable
 import androidx.compose.ui.layout.MeasureResult
 import androidx.compose.ui.layout.MeasureScope
-import androidx.compose.ui.platform.LocalViewConfiguration
-import androidx.compose.ui.platform.debugInspectorInfo
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
-import co.uk.nexhub.gimme.ui.model.GroupHost
 import co.uk.nexhub.gimme.ui.model.GroupValue
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlin.math.roundToInt
 
 /*================================================================================================*/
@@ -56,9 +49,10 @@ fun <T> ExtendedRadioButton(
     strokeWidth: Dp = RadioStrokeWidth * scale,
     groupValue: GroupValue<T>? = null
 ) {
+    val buttonStrokeWidth = strokeWidth * scale
     val buttonRippleRadius = RadioButtonRippleRadius * scale
     val buttonSize = RadioButtonSize * scale
-    val buttonDotRadius = (RadioButtonDotSize * dotMultiplier * scale) / 2;
+    val buttonDotRadius = (RadioButtonDotSize * dotMultiplier * scale) / 2
     val radius = (RadioButtonSize * scale) / 2
 
     val dotRadius by animateDpAsState(
@@ -101,22 +95,22 @@ fun <T> ExtendedRadioButton(
         if (hasFill) {
             drawCircle( // Fill
                 radioFillColors.value,
-                (radius - (strokeWidth / 2)).toPx(),
+                (radius - (buttonStrokeWidth / 2)).toPx(),
             )
         }
         drawCircle( // Stroke
             radioColors.value,
-            (radius - (strokeWidth / 2)).toPx(),
-            style = Stroke(width = strokeWidth.toPx())
+            (radius - (buttonStrokeWidth / 2)).toPx(),
+            style = Stroke(width = buttonStrokeWidth.toPx())
         )
         if (dotRadius > 0.dp) { // Dot
-            drawCircle(radioColors.value, (dotRadius - (strokeWidth / 2)).toPx(), style = Fill)
+            drawCircle(radioColors.value, (dotRadius - (buttonStrokeWidth / 2)).toPx(), style = Fill)
         }
     }
 }
 
 @Composable
-fun ExtendedRadioButton(
+fun <T> ExtendedRadioButton(
     selected: Boolean,
     onClick: (() -> Unit)?,
     modifier: Modifier = Modifier,
@@ -126,10 +120,12 @@ fun ExtendedRadioButton(
     dotMultiplier: Float = 1f,
     scale: Float = 1f,
     strokeWidth: Dp = RadioStrokeWidth * scale,
+    groupValue: GroupValue<T>? = null
 ) {
+    val buttonStrokeWidth = strokeWidth * scale
     val buttonRippleRadius = RadioButtonRippleRadius * scale
     val buttonSize = RadioButtonSize * scale
-    val buttonDotRadius = (RadioButtonDotSize * dotMultiplier * scale) / 2;
+    val buttonDotRadius = (RadioButtonDotSize * dotMultiplier * scale) / 2
     val radius = (RadioButtonSize * scale) / 2
 
     val dotRadius by animateDpAsState(
@@ -142,7 +138,7 @@ fun ExtendedRadioButton(
         if (onClick != null) {
             Modifier.selectable(
                 selected = selected,
-                onClick = onClick,
+                onClick = { groupValue?.setHostValue(); onClick.invoke()},
                 enabled = enabled,
                 role = Role.RadioButton,
                 interactionSource = interactionSource,
@@ -172,16 +168,16 @@ fun ExtendedRadioButton(
         if (hasFill) {
             drawCircle(// Fill
                 radioFillBrush.value,
-                (radius - (strokeWidth / 2)).toPx(),
+                (radius - (buttonStrokeWidth / 2)).toPx(),
             )
         }
         drawCircle( // Stroke
             radioBrush.value,
-            (radius - (strokeWidth / 2)).toPx(),
-            style = Stroke(width = strokeWidth.toPx())
+            (radius - (buttonStrokeWidth / 2)).toPx(),
+            style = Stroke(width = buttonStrokeWidth.toPx())
         )
         if (dotRadius > 0.dp) { // Dot
-            drawCircle(radioBrush.value, (dotRadius - (strokeWidth / 2)).toPx(), style = Fill)
+            drawCircle(radioBrush.value, (dotRadius - (buttonStrokeWidth / 2)).toPx(), style = Fill)
         }
     }
 }
@@ -189,7 +185,7 @@ fun ExtendedRadioButton(
 
 /*-----region Shaped Radio Buttons-----*/
 @Composable
-fun RoundedExtendedRadioButton(
+fun <T> RoundedExtendedRadioButton(
     selected: Boolean,
     onClick: (() -> Unit)?,
     modifier: Modifier = Modifier,
@@ -198,15 +194,18 @@ fun RoundedExtendedRadioButton(
     brushes: RadioButtonBrushes = RadioButtonBrushDefaults.brushes(),
     dotMultiplier: Float = 1f,
     scale: Float = 1f,
-    strokeWidth: Dp = RadioStrokeWidth * scale,
+    strokeWidth: Dp = RadioStrokeWidth,
     cornerRadius: CornerRadius = CornerRadius(
         x = (18.dp * scale).value,
         y = (18.dp * scale).value
-    )
+    ),
+    cornerRadiusDot: CornerRadius = cornerRadius,
+    groupValue: GroupValue<T>? = null
 ) {
-    val buttonRippleRadius = RadioButtonRippleRadius * scale;
-    val buttonSize = RadioButtonSize * scale;
-    val buttonDotSize = RadioButtonDotSize * dotMultiplier * scale;
+    val buttonStrokeWidth = strokeWidth * scale
+    val buttonRippleRadius = RadioButtonRippleRadius * scale
+    val buttonSize = RadioButtonSize * scale
+    val buttonDotSize = RadioButtonDotSize * dotMultiplier * scale
 
     val dotRadius by animateDpAsState(
         targetValue = if (selected) buttonDotSize else 0.dp,
@@ -214,11 +213,12 @@ fun RoundedExtendedRadioButton(
     )
     val radioBrush = brushes.radioBrush(enabled, selected)
     val radioFillBrush = brushes.radioFillBrush(enabled, selected)
+    val radioStrokeBrush = brushes.radioStrokeBrush(enabled, selected)
     val selectableModifier =
         if (onClick != null) {
             Modifier.selectable(
                 selected = selected,
-                onClick = onClick,
+                onClick = { groupValue?.setHostValue(); onClick.invoke()},
                 enabled = enabled,
                 role = Role.RadioButton,
                 interactionSource = interactionSource,
@@ -231,7 +231,7 @@ fun RoundedExtendedRadioButton(
             Modifier
         }
 
-    val strokeWidthRadius = (strokeWidth / 2);
+    val strokeWidthRadius = (buttonStrokeWidth / 2)
     val hasFill =
         radioFillBrush != RadioButtonBrushDefaults.brushes().radioFillBrush(enabled, selected)
     Canvas(
@@ -242,8 +242,8 @@ fun RoundedExtendedRadioButton(
             .requiredSize(buttonSize)
     ) {
         val size = Size(
-            width = (buttonSize - (strokeWidth / 1)).toPx(),
-            height = (buttonSize - (strokeWidth / 1)).toPx()
+            width = (buttonSize - (buttonStrokeWidth / 1)).toPx(),
+            height = (buttonSize - (buttonStrokeWidth / 1)).toPx()
         )
         if (hasFill) {
             drawRoundRect(
@@ -254,14 +254,14 @@ fun RoundedExtendedRadioButton(
             )
         }
         drawRoundRect( // Stroke
-            brush = radioBrush.value,
+            brush = radioStrokeBrush.value,
             topLeft = Offset(
                 x = strokeWidthRadius.toPx(),
                 y = strokeWidthRadius.toPx(),
             ),
             size = size,
             cornerRadius = cornerRadius,
-            style = Stroke(width = strokeWidth.toPx())
+            style = Stroke(width = buttonStrokeWidth.toPx())
         )
         if (dotRadius > 0.dp) {
             val dotSize = Size(
@@ -276,14 +276,14 @@ fun RoundedExtendedRadioButton(
                 brush = radioBrush.value,
                 size = dotSize,
                 topLeft = offset,
-                cornerRadius = cornerRadius,
+                cornerRadius = cornerRadiusDot,
             )
         }
     }
 }
 
 @Composable
-fun RoundedExtendedRadioButton(
+fun <T> RoundedExtendedRadioButton(
     selected: Boolean,
     onClick: (() -> Unit)?,
     modifier: Modifier = Modifier,
@@ -291,17 +291,21 @@ fun RoundedExtendedRadioButton(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     colors: RadioButtonColors = RadioButtonDefaults.colors(),
     fillColors: RadioButtonColors = RadioButtonDefaults.fillColors(),
+    strokeColor: RadioButtonColors = colors,
     dotMultiplier: Float = 1f,
     scale: Float = 1f,
-    strokeWidth: Dp = RadioStrokeWidth * scale,
+    strokeWidth: Dp = RadioStrokeWidth,
     cornerRadius: CornerRadius = CornerRadius(
         x = (18.dp * scale).value,
         y = (18.dp * scale).value
-    )
+    ),
+    cornerRadiusDot: CornerRadius = cornerRadius,
+    groupValue: GroupValue<T>? = null
 ) {
-    val buttonRippleRadius = RadioButtonRippleRadius * scale;
-    val buttonSize = RadioButtonSize * scale;
-    val buttonDotSize = RadioButtonDotSize * dotMultiplier * scale;
+    val buttonStrokeWidth = strokeWidth * scale
+    val buttonRippleRadius = RadioButtonRippleRadius * scale
+    val buttonSize = RadioButtonSize * scale
+    val buttonDotSize = RadioButtonDotSize * dotMultiplier * scale
 
     val dotRadius by animateDpAsState(
         targetValue = if (selected) buttonDotSize else 0.dp,
@@ -309,11 +313,13 @@ fun RoundedExtendedRadioButton(
     )
     val radioColors = colors.radioColor(enabled, selected)
     val radioFillColors = fillColors.radioColor(enabled, selected)
+    val strokeColors = strokeColor.radioColor(enabled, selected)
+
     val selectableModifier =
         if (onClick != null) {
             Modifier.selectable(
                 selected = selected,
-                onClick = onClick,
+                onClick = { groupValue?.setHostValue(); onClick.invoke()},
                 enabled = enabled,
                 role = Role.RadioButton,
                 interactionSource = interactionSource,
@@ -335,8 +341,8 @@ fun RoundedExtendedRadioButton(
             .requiredSize(buttonSize)
     ) {
         val size = Size(
-            width = (buttonSize - (strokeWidth / 2)).toPx(),
-            height = (buttonSize - (strokeWidth / 2)).toPx()
+            width = (buttonSize - (buttonStrokeWidth / 2)).toPx(),
+            height = (buttonSize - (buttonStrokeWidth / 2)).toPx()
         )
         if (hasFill) {
             drawRoundRect(
@@ -347,10 +353,10 @@ fun RoundedExtendedRadioButton(
             )
         }
         drawRoundRect( // Stroke
-            color = radioColors.value,
+            color = strokeColors.value,
             size = size,
             cornerRadius = cornerRadius,
-            style = Stroke(width = strokeWidth.toPx())
+            style = Stroke(width = buttonStrokeWidth.toPx())
         )
         if (dotRadius > 0.dp) {
             val dotSize = Size(
@@ -365,7 +371,7 @@ fun RoundedExtendedRadioButton(
                 color = radioColors.value,
                 size = dotSize,
                 topLeft = offset,
-                cornerRadius = cornerRadius,
+                cornerRadius = cornerRadiusDot,
             )
         }
     }
@@ -374,22 +380,70 @@ fun RoundedExtendedRadioButton(
 //endregion
 
 /*================================================================================================*/
+//region Presets Built On-Top
+/*================================================================================================*/
+
+/*-----region Shaped Radio Buttons-----*/
+@Composable
+fun <T> GimmeRadioButton(
+    selected: Boolean,
+    onClick: (() -> Unit)?,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    brushes: RadioButtonBrushes = RadioButtonBrushDefaults.brushes(
+        gradientType = GradientType.Horizontal,
+        gradientFillType = GradientType.Horizontal,
+        selectedFillGradient = listOf(MaterialTheme.colors.primary.copy(0.4f), MaterialTheme.colors.primary.copy(0.3f)),
+        unselectedFillGradient = listOf(MaterialTheme.colors.primary.copy(0.2f), MaterialTheme.colors.primary.copy(0.13f)),
+        selectedStrokeGradient = listOf(MaterialTheme.colors.primaryVariant, MaterialTheme.colors.primary),
+        unselectedStrokeGradient = listOf(MaterialTheme.colors.primary, MaterialTheme.colors.primary)
+    ),
+    dotMultiplier: Float = 1.35f,
+    scale: Float = 2f,
+    strokeWidth: Dp = 1.dp,
+    cornerRadius: CornerRadius = CornerRadius(
+        x = (20.dp * scale).value,
+        y = (20.dp * scale).value
+    ),
+    cornerRadiusDot: CornerRadius = CornerRadius(
+        x = (18.dp * scale).value,
+        y = (18.dp * scale).value
+    ),
+    groupValue: GroupValue<T>? = null
+){
+    RoundedExtendedRadioButton(
+        selected = selected,
+        onClick = onClick,
+        modifier = modifier,
+        enabled = enabled,
+        interactionSource = interactionSource,
+        brushes = brushes,
+        dotMultiplier = dotMultiplier,
+        scale = scale,
+        strokeWidth = strokeWidth,
+        cornerRadius = cornerRadius,
+        cornerRadiusDot = cornerRadiusDot,
+        groupValue = groupValue
+    )
+}
+//endregion
+//endregion
+/*================================================================================================*/
 //region Supporting Functions/Fields
 /*================================================================================================*/
 
 private const val RadioAnimationDuration = 100
 
 private val RadioButtonRippleRadius = 24.dp
-private val RadioButtonPadding = 2.dp
 private val RadioButtonSize = 20.dp
-private val RadioRadius = RadioButtonSize / 2
 private val RadioButtonDotSize = 12.dp
 private val RadioStrokeWidth = 2.dp
 private val brushDefaultSpring = spring<Brush>()
 /**
  * Represents the brush used by a [RadioButton] in different states.
  *
- * See [RadioButtonDefaults.Brushs] for the default implementation that follows Material
+ * See [RadioButtonBrushDefaults.brushes] for the default implementation that follows Material
  * specifications.
  */
 @Stable
@@ -405,6 +459,8 @@ interface RadioButtonBrushes {
     fun radioBrush(enabled: Boolean, selected: Boolean): State<Brush>
     @Composable
     fun radioFillBrush(enabled: Boolean, selected: Boolean): State<Brush>
+    @Composable
+    fun radioStrokeBrush(enabled: Boolean, selected: Boolean): State<Brush>
     @SuppressLint("UnrememberedMutableState")
     @Composable
     fun animateGradientAsState(targetGradient: List<Color>,
@@ -414,10 +470,8 @@ interface RadioButtonBrushes {
 
         val newGradient = mutableListOf<Color>()
 
-        var i = 0;
-        for (targetValue in targetGradient) {
+        for ((i, targetValue) in targetGradient.withIndex()) {
             newGradient.add(i, animateColorAsState(targetValue, tween(durationMillis = RadioBrushAnimationDuration)).value)
-            i++
         }
 
         return newGradient
@@ -432,9 +486,9 @@ object RadioButtonBrushDefaults {
      * Creates a [RadioButtonBrushes] that will animate between the provided brushes according to
      * the Material specification.
      *
-     * @param selectedBrush the Brush to use for the RadioButton when selected and enabled.
-     * @param unselectedBrush the Brush to use for the RadioButton when unselected and enabled.
-     * @param disabledBrush the Brush to use for the RadioButton when disabled.
+     * @param selectedGradient the Brush to use for the RadioButton when selected and enabled.
+     * @param unselectedGradient the Brush to use for the RadioButton when unselected and enabled.
+     * @param disabledGradient the Brush to use for the RadioButton when disabled.
      * @return the resulting [RadioButtonBrushes] used for the RadioButton
      */
     @Composable
@@ -442,19 +496,31 @@ object RadioButtonBrushDefaults {
         selectedGradient: List<Color> = listOf(MaterialTheme.colors.primary, MaterialTheme.colors.primaryVariant),
         unselectedGradient: List<Color> = listOf(MaterialTheme.colors.onSurface.copy(alpha = 0.6f), MaterialTheme.colors.onSurface.copy(alpha = 0.3f)),
         disabledGradient: List<Color> =  listOf(MaterialTheme.colors.onSurface.copy(alpha = ContentAlpha.disabled), MaterialTheme.colors.onSurface.copy(alpha = ContentAlpha.disabled)),
+        gradientType: GradientType = GradientType.Radial,
         selectedFillGradient: List<Color> =  listOf(MaterialTheme.colors.background.copy(alpha = 0f), MaterialTheme.colors.background.copy(alpha = 0f)),
         unselectedFillGradient: List<Color> = listOf(MaterialTheme.colors.background.copy(alpha = 0f), MaterialTheme.colors.background.copy(alpha = 0f)),
-        disabledFillGradient: List<Color> =  listOf(MaterialTheme.colors.background.copy(alpha = 0f), MaterialTheme.colors.background.copy(alpha = 0f))
+        disabledFillGradient: List<Color> =  listOf(MaterialTheme.colors.background.copy(alpha = 0f), MaterialTheme.colors.background.copy(alpha = 0f)),
+        gradientFillType: GradientType = GradientType.Radial,
+        selectedStrokeGradient: List<Color> =  selectedGradient,
+        unselectedStrokeGradient: List<Color> = unselectedGradient,
+        disabledStrokeGradient: List<Color> =  disabledGradient,
+        gradientStrokeType: GradientType = gradientType,
     ): RadioButtonBrushes {
         return remember(
             selectedGradient,
             unselectedGradient,
             disabledGradient,
+            gradientType,
             selectedFillGradient,
             unselectedFillGradient,
-            disabledFillGradient
+            disabledFillGradient,
+            gradientFillType,
+            selectedStrokeGradient,
+            unselectedStrokeGradient,
+            disabledStrokeGradient,
+            gradientStrokeType
         ) {
-            DefaultRadioButtonBrushes(selectedGradient, unselectedGradient, disabledGradient, selectedFillGradient, unselectedFillGradient, disabledFillGradient)
+            DefaultRadioButtonBrushes(selectedGradient, unselectedGradient, disabledGradient, gradientType, selectedFillGradient, unselectedFillGradient, disabledFillGradient, gradientFillType, selectedStrokeGradient, unselectedStrokeGradient, disabledStrokeGradient, gradientStrokeType)
         }
     }
 }
@@ -469,25 +535,27 @@ private class DefaultRadioButtonBrushes(
     private val selectedGradient: List<Color>,
     private val unselectedGradient: List<Color>,
     private val disabledGradient: List<Color>,
+    private val gradientType: GradientType,
     private val selectedFillGradient: List<Color>,
     private val unselectedFillGradient: List<Color>,
-    private val disabledFillGradient: List<Color>
+    private val disabledFillGradient: List<Color>,
+    private val gradientFillType: GradientType,
+    private val selectedStrokeGradient: List<Color>,
+    private val unselectedStrokeGradient: List<Color>,
+    private val disabledStrokeGradient: List<Color>,
+    private val gradientStrokeType: GradientType,
 
-) : RadioButtonBrushes {
+    ) : RadioButtonBrushes {
     @SuppressLint("UnrememberedMutableState")
     @Composable
     override fun radioBrush(enabled: Boolean, selected: Boolean): State<Brush> {
-        val target = when {
+        val target: List<Color> = when {
             !enabled -> disabledGradient
             !selected -> unselectedGradient
             else -> selectedGradient
         }
 
-        return if (enabled) {
-            mutableStateOf(Brush.radialGradient(animateGradientAsState(target, tween(durationMillis = RadioBrushAnimationDuration)) as List<Color>))
-        } else {
-            mutableStateOf(Brush.radialGradient(animateGradientAsState(target)))
-        }
+        return getGradientTarget(enabled, target, gradientType)
     }
 
     @SuppressLint("UnrememberedMutableState")
@@ -499,12 +567,42 @@ private class DefaultRadioButtonBrushes(
             else -> selectedFillGradient
         }
 
-        return if (enabled) {
-            mutableStateOf(Brush.radialGradient(animateGradientAsState(target, tween(durationMillis = RadioBrushAnimationDuration)) as List<Color>))
-        } else {
-            mutableStateOf(Brush.radialGradient(animateGradientAsState(target)))
-        }
+        return getGradientTarget(enabled, target, gradientFillType)
     }
+
+    @SuppressLint("UnrememberedMutableState")
+    @Composable
+    override fun radioStrokeBrush(enabled: Boolean, selected: Boolean): State<Brush> {
+        val target = when {
+            !enabled -> disabledStrokeGradient
+            !selected -> unselectedStrokeGradient
+            else -> selectedStrokeGradient
+        }
+
+        return getGradientTarget(enabled, target, gradientStrokeType)
+    }
+
+    @SuppressLint("UnrememberedMutableState")
+    @Composable
+    private fun getGradientTarget(enabled: Boolean, target: List<Color>, gradient: GradientType): MutableState<Brush> {
+        return mutableStateOf(
+            when (gradient) {
+                GradientType.Linear -> Brush.linearGradient(getAnimatedGradientTarget(enabled, target))
+                GradientType.Horizontal -> Brush.horizontalGradient(getAnimatedGradientTarget(enabled, target))
+                GradientType.Vertical -> Brush.verticalGradient(getAnimatedGradientTarget(enabled, target))
+                GradientType.Radial -> Brush.radialGradient(getAnimatedGradientTarget(enabled, target))
+            }
+        )
+    }
+
+    @Composable
+    private fun getAnimatedGradientTarget(enabled: Boolean, target: List<Color>): List<Color> {
+        return if (enabled)
+            animateGradientAsState(target, tween(durationMillis = RadioBrushAnimationDuration)) else
+            animateGradientAsState(target)
+    }
+
+
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -564,12 +662,19 @@ private class MinimumTouchTargetModifier(val size: DpSize = DpSize(48.dp, 48.dp)
     }
 }
 
+enum class GradientType {
+    Linear,
+    Horizontal,
+    Vertical,
+    Radial
+}
+
 @Composable
 fun RadioButtonDefaults.fillColors(
-        selectedColor: Color = MaterialTheme.colors.background.copy(alpha = 0f),
-        unselectedColor: Color = MaterialTheme.colors.background.copy(alpha = 0f),
-        disabledColor: Color = MaterialTheme.colors.background.copy(alpha = 0f)
-    ): RadioButtonColors {
+    selectedColor: Color = MaterialTheme.colors.background.copy(alpha = 0f),
+    unselectedColor: Color = MaterialTheme.colors.background.copy(alpha = 0f),
+    disabledColor: Color = MaterialTheme.colors.background.copy(alpha = 0f)
+): RadioButtonColors {
     return this.colors(selectedColor, unselectedColor, disabledColor)
 }
 //endregion

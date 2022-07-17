@@ -5,14 +5,13 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import co.uk.nexhub.gimme.R
 import co.uk.nexhub.gimme.ui.elements.base.BoxWithContext
 import co.uk.nexhub.gimme.ui.elements.controls.*
@@ -24,7 +23,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 
 @Destination
 @Composable
-fun SettingsScreen(arg: String?) {
+fun SettingsScreen(arg: String?) { // arg could be used in future to select a setting to scroll to.
     val scrollState = rememberScrollState()
     val contextBoxModifer = Modifier.padding(bottom = 20.dp)
 
@@ -53,7 +52,7 @@ fun SettingsScreen(arg: String?) {
             "Text Field Setting",
             "Here is a text field setting example within this settings menu.",
             contextBoxModifer,
-            Modifier,
+            Modifier.padding(top = 10.dp),
             false
         ) {
             var text by remember { mutableStateOf(TextFieldValue("")) }
@@ -67,44 +66,57 @@ fun SettingsScreen(arg: String?) {
                 colors = TextFieldDefaults.textFieldColors(unfocusedIndicatorColor = MaterialTheme.colors.primaryVariant)
             )
         }
+
+        val someOptionsHost = remember { GroupHost("") }
         BoxWithContext(
             "Radio Buttons",
             "Users can see & ping your device when you aren’t looking shares/files.",
             contextBoxModifer.fillMaxWidth(),Modifier.fillMaxWidth(),
             inline = false
         ) {
-            val choices = arrayOf(RadioButtonChoice("Option One", { println("Option One") }), RadioButtonChoice("Option Two", { println("Option Two") }))
-            //TODO do grouping functionality. incoropate a generic way to use a list to automatically generate the buttons and groups
-            Column() {
+            Column {
                 val modifier = Modifier.padding(1.dp)
-                val someOptionsHost = remember { GroupHost("") };
-
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     val option1 = someOptionsHost.createValue("First")
-                    ExtendedRadioButton(option1.isSelected(), {}, modifier, groupValue = option1)
+                    GimmeRadioButton(option1.isSelected(), {}, modifier, groupValue = option1)
                     Text("Some Option 1")
                 }
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     val option2 = someOptionsHost.createValue("Second")
-                    ExtendedRadioButton(option2.isSelected(), {}, modifier, groupValue = option2)
+                    GimmeRadioButton(option2.isSelected(), {}, modifier, groupValue = option2)
                     Text("Some Option 2")
                 }
+            }
+        }
 
-                val context = LocalContext.current
-                Button(onClick = {
+        BoxWithContext(
+            "Link / Button",
+            "Description around this button / link.",
+            contextBoxModifer.fillMaxWidth(),
+            contextWeight = 0.55f
+        ) {
+            val context = LocalContext.current
+            GimmeRectangleButton(
+                onClick = {
                     Toast.makeText(
                         context,
                         "Selected Value: " + someOptionsHost.getSelectedValue(),
                         Toast.LENGTH_SHORT
                     ).show()
-                }, content = {
-                    Text(text = "Show Selected (Toast)")
-                })
+                },
+                corner = 14.dp
+            ) {
+                Text(
+                    text = "Confirm Selection",
+                    color = MaterialTheme.colors.background.copy(0.8f),
+                    fontSize = 12.sp
+                )
             }
         }
     }
 }
+
 
 @Preview
 @Composable

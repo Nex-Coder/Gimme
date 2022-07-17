@@ -121,13 +121,13 @@ fun GimmeCircleButton(
 @Composable
 fun GimmeRectangleButton(
     modifier: Modifier = Modifier,
-    width: Dp = 380.dp,
-    height: Dp = width,
+    width: Dp = Dp.Unspecified,
+    height: Dp = Dp.Unspecified,
     border: BorderStroke = BorderStroke(1.dp, MaterialTheme.colors.primary),
-    contentPadding: PaddingValues = PaddingValues(0.dp),
+    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
     corner: Dp = 20.dp,
 
-    imageId: Int,
+    imageId: Int? = null,
     contentDescription: String = "Gimme Rectangle button's image.",
     imageScale: Float = 0.675f,
     imageAlignment: Alignment = Alignment.Center,
@@ -168,6 +168,10 @@ fun GimmeRectangleButton(
                 ),
                 RoundedCornerShape(corner + 6.dp)
             )
+            .defaultMinSize(
+                minWidth = ButtonDefaults.MinWidth,
+                minHeight = ButtonDefaults.MinHeight
+            )
             .padding(bottom = shadowPadding), contentAlignment = Alignment.TopCenter
     ) {
 
@@ -185,24 +189,27 @@ fun GimmeRectangleButton(
                 ),
                 shape
             )
+            .border(border, shape)
 
         OutlinedButton(
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
-            border = border,
+            border = BorderStroke(0.dp, Color.Transparent),
             shape = shape,
             contentPadding = contentPadding,
             modifier = lModifier,
             onClick = onClick,
         ) {
-            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Image(
-                    painterResource(imageId), contentDescription,
-                    Modifier
-                        .fillMaxWidth(imageScale)
-                        .aspectRatio(1f),
-                    imageAlignment, imageContentScale, imageAlpha, imageColorFilter
-                )
-                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center, content = content)
+            Box(Modifier, contentAlignment = Alignment.Center) {
+                imageId?.let {
+                    Image(
+                        painterResource(imageId), contentDescription,
+                        Modifier
+                            .fillMaxWidth(imageScale)
+                            .aspectRatio(1f),
+                        imageAlignment, imageContentScale, imageAlpha, imageColorFilter
+                    )
+                }
+                Box(Modifier, contentAlignment = Alignment.Center, content = content)
             }
         }
         //Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center, content = content)

@@ -21,24 +21,24 @@ fun BoxWithContext(name: String,
                    contextWeight: Float = if (inline) 0.68f else 1f,
                    nameColor: Color = MaterialTheme.extras().solidColor.copy(alpha = 0.9f),
                    descriptionColor: Color = nameColor.copy(alpha = 0.6f),
-                   fontSize: TextUnit = 30.sp,
+                   fontSize: TextUnit = 27.sp,
                    content: @Composable BoxScope.() -> Unit) {
     val contextWeightFinal: Float = if (contextWeight > 0.98f) 0.98f else contextWeight
     Column(modifier, verticalArrangement = Arrangement.Center) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(contextWeightFinal, true), Arrangement.Top, Alignment.Start) {
-                Text(name, Modifier, nameColor, fontSize, fontFamily = fontCambay)
+                Text(name, Modifier, nameColor, fontSize, fontFamily = fontCambay, lineHeight = 0.sp)
                 Text(
                     description,
                     Modifier,
                     descriptionColor,
-                    fontSize.div(2.1f),
+                    fontSize.div(2.08f),
                     fontFamily = fontCambay
                 )
             }
             if (inline) {
                 Box(
-                    boxModifier.weight(0.99f - contextWeightFinal, false),
+                    boxModifier.weight(0.99f - contextWeightFinal, true),
                     Alignment.CenterEnd,
                     false,
                     content
