@@ -12,17 +12,10 @@ import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.CornerRadius
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.Fill
-import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.layout.LayoutModifier
-import androidx.compose.ui.layout.Measurable
-import androidx.compose.ui.layout.MeasureResult
-import androidx.compose.ui.layout.MeasureScope
+import androidx.compose.ui.geometry.*
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.drawscope.*
+import androidx.compose.ui.layout.*
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
@@ -234,6 +227,8 @@ fun <T> RoundedExtendedRadioButton(
     val strokeWidthRadius = (buttonStrokeWidth / 2)
     val hasFill =
         radioFillBrush != RadioButtonBrushDefaults.brushes().radioFillBrush(enabled, selected)
+    val sizeXY = (buttonSize - (buttonStrokeWidth / 1))
+
     Canvas(
         modifier
             .then(if (onClick != null) MinimumTouchTargetModifier() else Modifier)
@@ -242,8 +237,8 @@ fun <T> RoundedExtendedRadioButton(
             .requiredSize(buttonSize)
     ) {
         val size = Size(
-            width = (buttonSize - (buttonStrokeWidth / 1)).toPx(),
-            height = (buttonSize - (buttonStrokeWidth / 1)).toPx()
+            width = sizeXY.toPx(),
+            height = sizeXY.toPx()
         )
         if (hasFill) {
             drawRoundRect(
@@ -385,9 +380,11 @@ fun <T> RoundedExtendedRadioButton(
 
 /*-----region Shaped Radio Buttons-----*/
 @Composable
+@SuppressLint("ModifierParameter")
 fun <T> GimmeRadioButton(
-    selected: Boolean,
-    onClick: (() -> Unit)?,
+    groupValue: GroupValue<T>? = null,
+    selected: Boolean = groupValue?.let{ groupValue.isSelected() }?:run{ false },
+    onClick: (() -> Unit) = {},
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
@@ -403,14 +400,13 @@ fun <T> GimmeRadioButton(
     scale: Float = 2f,
     strokeWidth: Dp = 1.dp,
     cornerRadius: CornerRadius = CornerRadius(
-        x = (20.dp * scale).value,
-        y = (20.dp * scale).value
+        x = (22.dp * scale).value,
+        y = (22.dp * scale).value
     ),
     cornerRadiusDot: CornerRadius = CornerRadius(
         x = (18.dp * scale).value,
         y = (18.dp * scale).value
-    ),
-    groupValue: GroupValue<T>? = null
+    )
 ){
     RoundedExtendedRadioButton(
         selected = selected,
@@ -427,11 +423,14 @@ fun <T> GimmeRadioButton(
         groupValue = groupValue
     )
 }
+
+
 //endregion
 //endregion
 /*================================================================================================*/
 //region Supporting Functions/Fields
 /*================================================================================================*/
+
 
 private const val RadioAnimationDuration = 100
 
@@ -499,7 +498,7 @@ object RadioButtonBrushDefaults {
         gradientType: GradientType = GradientType.Radial,
         selectedFillGradient: List<Color> =  listOf(MaterialTheme.colors.background.copy(alpha = 0f), MaterialTheme.colors.background.copy(alpha = 0f)),
         unselectedFillGradient: List<Color> = listOf(MaterialTheme.colors.background.copy(alpha = 0f), MaterialTheme.colors.background.copy(alpha = 0f)),
-        disabledFillGradient: List<Color> =  listOf(MaterialTheme.colors.background.copy(alpha = 0f), MaterialTheme.colors.background.copy(alpha = 0f)),
+        disabledFillGradient: List<Color> =  listOf(MaterialTheme.colors.onBackground.copy(alpha = 0.1f), MaterialTheme.colors.onBackground.copy(alpha = 0.17f)),
         gradientFillType: GradientType = GradientType.Radial,
         selectedStrokeGradient: List<Color> =  selectedGradient,
         unselectedStrokeGradient: List<Color> = unselectedGradient,

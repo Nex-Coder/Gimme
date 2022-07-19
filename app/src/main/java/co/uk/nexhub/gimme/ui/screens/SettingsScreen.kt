@@ -67,7 +67,7 @@ fun SettingsScreen(arg: String?) { // arg could be used in future to select a se
             )
         }
 
-        val someOptionsHost = remember { GroupHost("") }
+        val optionsHost = remember { GroupHost("") }
         BoxWithContext(
             "Radio Buttons",
             "Users can see & ping your device when you aren’t looking shares/files.",
@@ -77,15 +77,18 @@ fun SettingsScreen(arg: String?) { // arg could be used in future to select a se
             Column {
                 val modifier = Modifier.padding(1.dp)
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    val option1 = someOptionsHost.createValue("First")
-                    GimmeRadioButton(option1.isSelected(), {}, modifier, groupValue = option1)
+                    GimmeRadioButton(optionsHost.createValue("First"))
                     Text("Some Option 1")
                 }
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    val option2 = someOptionsHost.createValue("Second")
-                    GimmeRadioButton(option2.isSelected(), {}, modifier, groupValue = option2)
+                    GimmeRadioButton(optionsHost.createValue("Second"))
                     Text("Some Option 2")
+                }
+
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    GimmeRadioButton(optionsHost.createValue("Third"), enabled = false)
+                    Text("Disabled Option 3")
                 }
             }
         }
@@ -101,7 +104,7 @@ fun SettingsScreen(arg: String?) { // arg could be used in future to select a se
                 onClick = {
                     Toast.makeText(
                         context,
-                        "Selected Value: " + someOptionsHost.getSelectedValue(),
+                        "Selected Value: " + optionsHost.getSelectedValue(),
                         Toast.LENGTH_SHORT
                     ).show()
                 },

@@ -10,9 +10,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 fun Modifier.coloredShadow(
-    color: Color,
-    alpha: Float = 0.2f,
-    borderRadius: Dp = 0.dp,
+    color: Color = Color.Gray,
+    alpha: Float = 0.99f,
+    borderRadius: Dp = 2.dp,
     shadowRadius: Dp = 20.dp,
     offsetY: Dp = 0.dp,
     offsetX: Dp = 0.dp
